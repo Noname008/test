@@ -1,17 +1,25 @@
 pipeline {
     agent any
     stages{
-        stage('build'){
+	stage('checkout'){
             steps {
-                sh 'mvn clean install'
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']],extensions: [], userRemoteConfigs: [[url: 'https://github.com/Noname008/test']]])
+            }
+        }
+	stage('build'){
+            steps {
+                bat 'mvn compile'
             }
         }
     }
     post {
         always {
-            mail to :"eng48mar@gmail.com",
-                subject: "New build report: ${currentBuild.fullDisplayName}",
-                body:"Check out status at ${env.BUILD_URL}"
+           	mail bcc: '',
+		body: 'test', 
+		cc: '',from: '',
+		replyTo: '', 
+		subject: 'Pipeline Jenkins', 
+		to:'eng48mar@gmail.com'
         }
     }
 }
