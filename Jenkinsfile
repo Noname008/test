@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    tools{
+	maven "maven 3.8.4"
+	jdk "jdk17"
+    }
+	environment{
+	build_version = "${BUILD_NUMBER}"
+    }
     stages{
 	stage('checkout'){
             steps {
