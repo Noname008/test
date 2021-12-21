@@ -24,12 +24,12 @@ pipeline {
 		}
             }
         }
-	stage('Unzip'){
+	stage('unzip'){
             steps {
                 unzip zipFile: env.BUILD_DISPLAY_NAME+'_archive.zip', dir:'C:\\Users\\mssql\\Rep\\'+env.BUILD_DISPLAY_NAME
             }
         }
-	stage('Unzip'){
+	stage('mail'){
             steps {
                 mail bcc: ",body: 'test', cc: ",from: ",replyTo: ", subject: 'Pipeline Jenkins', to:'eng48mar@gmail.com'
             }
