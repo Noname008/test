@@ -31,7 +31,7 @@ pipeline {
         }
 	stage('mail'){
             steps {
-                mail bcc: ",body: 'test', cc: ",from: ",replyTo: ", subject: 'Pipeline Jenkins', to:'eng48mar@gmail.com'
+                mail bcc: '',body: 'test', cc: '',from: '',replyTo: '', subject: 'Pipeline Jenkins', to:'eng48mar@gmail.com'
             }
         }
     }
