@@ -1,14 +1,9 @@
 pipeline {
     agent any
     stages{
-        stage('build'){
+	stage('build'){
             steps {
-                sh 'mvn clean install'
-            }
-        }
-	stage('clone'){
-            steps {
-                git 'C:\\Users\\mssql\\Rep\\'
+                git 'C:\\Users\\mssql\\Documents\\GitHub\\simple_maven\\'
 		bat "mvn compile"
             }
         }
@@ -20,7 +15,7 @@ pipeline {
 	stage('archive'){
             steps {
                 script{
-			zip archive: true, dir: ", glob: ", zipFile:env.BUILD_DISPLAY_NAME+'_archive.zip'
+			zip archive: true, dir: '', glob: '', zipFile:env.BUILD_DISPLAY_NAME+'_archive.zip'
 		}
             }
         }
