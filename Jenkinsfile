@@ -1,40 +1,17 @@
 pipeline {
     agent any
-    environment{
-	build_version = "${BUILD_NUMBER}"
-    }
     stages{
-	stage('checkout'){
+        stage('build'){
             steps {
-		checkout([$class: 'GitSCM', branches: [[name: '*/master']],extensions: [], userRemoteConfigs: [[url: 'https://github.com/Noname008/test']]])
+                sh 'mvn clean install'
             }
         }
-	stage('build'){
-            steps {
-		bat "mvn compile"
-            }
-        }
-	stage('test'){
-            steps {
-                bat "mvn test"
-            }
-        }
-	stage('archive'){
-            steps {
-                script{
-			bat "mvn -Dbuild_version=${build_version} package"
-		}
-            }
-        }
-	stage('mail'){
-            steps {
-                mail bcc: '',body: 'test', cc: '',from: '',replyTo: '', subject: 'Pipeline Jenkins', to:'eng48mar@gmail.com'
-            }
-        }
-	stage('publish'){
-            steps {
-                bat "move /Y \"${workspace}\\target\\jenkins-simple-*\" C:\\test"
-            }
+    }
+    post {
+        always {
+            mail to :"eng48mar@gmail.com",
+                subject: "New build report: ${currentBuild.fullDisplayName}",
+                body:"Check out status at ${env.BUILD_URL}"
         }
     }
 }
