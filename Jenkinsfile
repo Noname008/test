@@ -20,8 +20,7 @@ pipeline {
 	stage('archive'){
             steps {
                 script{
-			zip archive: true, dir: ", glob: ", zipFile:
-			env.BUILD_DISPLAY_NAME+'_archive.zip'
+			zip archive: true, dir: ", glob: ", zipFile:env.BUILD_DISPLAY_NAME+'_archive.zip'
 		}
             }
         }
@@ -32,7 +31,7 @@ pipeline {
         }
 	stage('Unzip'){
             steps {
-                mail bcc: ",body: "test", cc: ",from: ",replyTo: ", subject: 'Pipeline Jenkins', to: 'eng48mar@gmail.com'
+                mail bcc: ",body: 'test', cc: ",from: ",replyTo: ", subject: 'Pipeline Jenkins', to:'eng48mar@gmail.com'
             }
         }
     }
