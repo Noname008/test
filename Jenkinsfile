@@ -1,9 +1,13 @@
 pipeline {
     agent any
     stages{
+	stage('checkout'){
+            steps {
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']],extensions: [], userRemoteConfigs: [[url: 'https://github.com/Noname008/test']]])
+            }
+        }
 	stage('build'){
             steps {
-                git 'C:\\Users\\mssql\\Documents\\GitHub\\simple_maven\\'
 		bat "mvn compile"
             }
         }
@@ -15,18 +19,18 @@ pipeline {
 	stage('archive'){
             steps {
                 script{
-			zip archive: true, dir: '', glob: '', zipFile:env.BUILD_DISPLAY_NAME+'_archive.zip'
+			bat "mvn -Dbuild_version=${build_version} package"
 		}
-            }
-        }
-	stage('unzip'){
-            steps {
-                unzip zipFile: env.BUILD_DISPLAY_NAME+'_archive.zip', dir:'C:\\Users\\mssql\\Rep\\'+env.BUILD_DISPLAY_NAME
             }
         }
 	stage('mail'){
             steps {
                 mail bcc: '',body: 'test', cc: '',from: '',replyTo: '', subject: 'Pipeline Jenkins', to:'eng48mar@gmail.com'
+            }
+        }
+	stage('publish'){
+            steps {
+                bat "move /Y \"${workspace}\\target\\jenkins-simple-*\" C:\\test"
             }
         }
     }
