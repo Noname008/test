@@ -3,7 +3,7 @@ pipeline {
     stages{
 	stage('checkout'){
             steps {
-		checkout([$class: 'GitSCM', branches: [[name: '*/master']],extensions: [], userRemoteConfigs: [[url: 'https://github.com/Noname008/test']]])
+		checkout([$class: 'GitSCM', branches: [[name: 'master']], extensions: [], userRemoteConfigs: [[credentialsId: 'e7c4e7f8-a755-4dfc-822b-8bb00e45198e', url: 'https://github.com/Noname008/test.git']]])
             }
         }
 	stage('build'){
@@ -14,12 +14,7 @@ pipeline {
     }
     post {
         always {
-           	mail bcc: '',
-		body: 'test', 
-		cc: '',from: '',
-		replyTo: '', 
-		subject: 'Pipeline Jenkins', 
-		to:'eng48mar@gmail.com'
+           	mail bcc: '', body: 'test', cc: '', from: '', replyTo: '', subject: 'jenkins', to: 'eng48mar@gmail.com'
         }
     }
 }
