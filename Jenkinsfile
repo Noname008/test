@@ -1,8 +1,8 @@
 pipeline {
     agent any
     tools {
-	maven "maven"
-	jdk "17"
+	maven "maven_3.8.4"
+	jdk "jdk9"
     }
     environment{
 	build_version = "${BUILD_NUMBER}"
