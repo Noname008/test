@@ -1,13 +1,39 @@
 pipeline {
     agent any
-    tools {
-   	maven 'maven_3.8.4'
-    	jdk 'jdk9'
+    environment{
+	build_version = "${BUILD_NUMBER}"
     }
-    stages {
-	stage('Build'){
+    stages{
+	stage('checkout'){
             steps {
-                bat 'set'
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']],extensions: [], userRemoteConfigs: [[url: 'https://github.com/Noname008/test']]])
+            }
+        }
+	stage('build'){
+            steps {
+		bat "mvn compile"
+            }
+        }
+	stage('test'){
+            steps {
+                bat "mvn test"
+            }
+        }
+	stage('archive'){
+            steps {
+                script{
+			bat "mvn -Dbuild_version=${build_version} package"
+		}
+            }
+        }
+	stage('mail'){
+            steps {
+                mail bcc: '',body: 'test', cc: '',from: '',replyTo: '', subject: 'Pipeline Jenkins', to:'eng48mar@gmail.com'
+            }
+        }
+	stage('publish'){
+            steps {
+                bat "move /Y \"${workspace}\\target\\jenkins-simple-*\" C:\\test"
             }
         }
     }
