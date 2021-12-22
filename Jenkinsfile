@@ -1,9 +1,5 @@
 pipeline {
-    agent any
-    tools{
-	maven 'maven_3.8.4'
-	jdk 'jdk9'
-    }
+    agent { docker { image 'maven:3.8.4-openjdk-11-slim' } }
     environment {
 	build_version= '${build_number}'
     }
