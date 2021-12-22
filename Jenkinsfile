@@ -1,23 +1,10 @@
 pipeline {
-    agent { any { image 'maven:3.8.4-openjdk-11-slim' } }
-    environment {
-	build_version= '${build_number}'
-    }
-    stages{
-	stage('checkout'){
+    agent any
+    stages {
+	stage('Build'){
             steps {
-		checkout([$class: 'GitSCM', branches: [[name: 'master']], extensions: [], userRemoteConfigs: [[credentialsId: 'e7c4e7f8-a755-4dfc-822b-8bb00e45198e', url: 'https://github.com/Noname008/test.git']]])
+                bat 'set'
             }
-        }
-	stage('build'){
-            steps {
-                bat 'mvn compile'
-            }
-        }
-    }
-    post {
-        always {
-           	mail bcc: '', body: 'test', cc: '', from: '', replyTo: '', subject: 'jenkins', to: 'eng48mar@gmail.com'
         }
     }
 }
