@@ -1,9 +1,12 @@
 pipeline {
     agent any
-	tools{
-maven 'maven_3.8.4'
-jdk 'jdk9'
-}
+    tools{
+	maven 'maven_3.8.4'
+	jdk 'jdk9'
+    }
+    environment {
+	build_version= '${build_number}'
+    }
     stages{
 	stage('checkout'){
             steps {
