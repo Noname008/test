@@ -1,14 +1,6 @@
 pipeline {
     agent any
     stages{
-<<<<<<< HEAD
-=======
-	stage('Checkout'){
-            steps {
-		checkout([$class: 'GitSCM', branches: [[name: '*/master']],extensions: [], userRemoteConfigs: [[url: 'https://github.com/Noname008/test']]])
-            }
-        }
->>>>>>> 2bc0696a792e90095ed5ed624d178444a1f4c27a
 	stage('Build'){
             steps {
 		bat "mvn compile"
